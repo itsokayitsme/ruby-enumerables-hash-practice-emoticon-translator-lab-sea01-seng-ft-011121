@@ -24,7 +24,7 @@ end
 
 
 def get_japanese_emoticon(path, emoticon)
-  load_library(path).each {|key, va;ie| if value [:english] == emoticon then return value
+  load_library(path).each {|key, va;ie| if value [:english] == emoticon then return value[:japanese]
     "Sorry, that emoticon was not found"
   end
 end 	
