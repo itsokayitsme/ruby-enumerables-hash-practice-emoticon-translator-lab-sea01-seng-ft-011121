@@ -2,25 +2,24 @@ require 'pry'
 require 'yaml'
 
 
-def load_library(file_path)
- library = YAML.load_file(file_path)
-  result = {"get_meaning" => {}, "get_emoticon" => {}}
-  library.each do |meaning, emoticons|
-    result["get_meaning"][emoticons[1]] = meaning
-    result["get_emoticon"][emoticons[0]] = emoticons[1]
+def load_library(path)
+ final_hash = {}
+ YAML.load_file(path).each do |key, value|
+   final_hash[key] = {}
+   final_hash[key][:english] = value[0]
+   final_hash[key][:japanese] = value[1]
   end
-  result
+  final_hash
 end	
 
-
-	load_library('./lib/emoticons.yml')
 	
-def get_japanese_emoticon(file_path = './lib/emoticons.yml', english_emoticon)
-  library = load_library(file_path)
-  if library["get_emoticon"].include?(english_emoticon) 
-    library["get_emoticon"][english_emoticon]
-  else
-    "Sorry, that emoticon was not found"
+def get_english_meaning(path, emoticon)
+  load_library(path).each do |key, value|
+    if value[:japanese] == emoticon
+      return key
+    end
+  end
+  return "Sorry, that emoticon was not found"
   end
 end
 
